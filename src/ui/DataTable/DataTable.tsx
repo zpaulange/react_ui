@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
 import Select from "../Select/Select";
 import styles from "./dataTable.module.scss";
 
@@ -61,24 +60,24 @@ export default function DataTable(props: DataTableProps) {
     [key: string]: any;
   }
   const filterData =
-    filters?.data &&
-    filters.data.map((f: FilterDataItem, idx: number) => (
-      <Select
-        key={idx}
-        options={f.options}
-        onSelect={(option: any) => {
-          if (f.label?.name) {
-            setSelectedFilters((prev) => ({
-              ...prev,
-              [f.label?.name ?? ""]: option,
-            }));
-          }
-        }}
-        statusColors={!!f.statusColors}
-        count={!!f.count}
-        label={f.label}
-      />
-    ));
+  filters?.data &&
+  filters.data.map((f: FilterDataItem, idx: number) => (
+    <Select
+      key={idx}
+      options={f.options}
+      onSelect={(option: any) => {
+        if (f.label?.name) {
+          setSelectedFilters((prev) => ({
+            ...prev,
+            [f.label?.name ?? ""]: option,
+          }));
+        }
+      }}
+      statusColors={!!f.statusColors}
+      count={!!f.count}
+      label={f.label}
+    />
+  ));
 
   return (
     <div className={styles.datatable}>
