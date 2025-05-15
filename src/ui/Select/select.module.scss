@@ -4,6 +4,11 @@
   width:200px;
   position: relative;
 }
+.select_label{
+  font-size: .8rem;
+  display: block;
+  text-align: left;
+}
 .select_value{
   display: flex;
   justify-content: space-between;

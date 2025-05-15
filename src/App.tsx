@@ -32,6 +32,7 @@ function App() {
           }}
           statusColors={true}
           count={true}
+          label='Status'
         />
         <Select
           options={optionsList2}

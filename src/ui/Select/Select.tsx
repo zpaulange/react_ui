@@ -15,11 +15,12 @@ interface SelectProps {
   options: Option[]
   onSelect: (option: Option) => void
   isLabel?: boolean,
+  label?: string
   statusColors?: boolean
   count?: boolean
 }
 export default function Select(props: SelectProps) {
-  const {width, options, onSelect, isLabel, statusColors, count} = props
+  const {width, options, onSelect, isLabel, label, statusColors, count} = props
   //states
   const [showSelectOptions, setShowSelectOptions] = useState(false)
   const selectRef = useRef<HTMLDivElement>(null)
@@ -74,6 +75,7 @@ export default function Select(props: SelectProps) {
 
   return (
     <div className={styles.select} ref={selectRef} style={{...(width && { width }) }}>
+      {label && <span className={styles.select_label}>{label}</span>}
       <div className={styles.select_value} onClick={handleDisplaySelectOptions}>
         <span className={styles.select_value_text}>
           {selectedOption ? selectedOption.value : 'Select an option'}
@@ -90,7 +92,7 @@ export default function Select(props: SelectProps) {
         </span>
       </div>
       {showSelectOptions && (
-        <div className={styles.select_box}>
+        <div className={styles.select_box} style={{ ...(label && { top: '44px' }) }}>
           <div className={styles.select_search_box}>
             <input
               type="text"
