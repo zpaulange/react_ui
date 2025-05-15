@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import './App.css'
 import Select from './ui/Select/Select'
+import DataTable from './ui/DataTable/DataTable'
 
 function App() {
   const optionsList1 = [
@@ -41,6 +42,9 @@ function App() {
           }}
           isLabel={true}
         />
+      </div>
+      <div className='box'>
+        <DataTable/>
       </div>
     </>
   )
