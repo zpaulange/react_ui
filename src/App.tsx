@@ -34,6 +34,9 @@ function App() {
           data={[]}
         />
       </div>
+      <div className='box'>
+        <DataTable/>
+      </div>
     </>
   )
 }
