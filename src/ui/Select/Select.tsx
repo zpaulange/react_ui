@@ -15,7 +15,7 @@ interface SelectProps {
   options: Option[]
   onSelect: (option: Option) => void
   isLabel?: boolean,
-  label?: string
+  label?: any
   statusColors?: boolean
   count?: boolean
 }
@@ -75,7 +75,7 @@ export default function Select(props: SelectProps) {
 
   return (
     <div className={styles.select} ref={selectRef} style={{...(width && { width }) }}>
-      {label && <span className={styles.select_label}>{label}</span>}
+      {label && label.title && <span className={styles.select_label_title}>{label.title}</span>}
       <div className={styles.select_value} onClick={handleDisplaySelectOptions}>
         <span className={styles.select_value_text}>
           {selectedOption ? selectedOption.value : 'Select an option'}
