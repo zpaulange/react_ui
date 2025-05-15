@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Select from "../Select/Select";
@@ -57,4 +58,35 @@ export default function DataTable(props: DataTableProps) {
       </div>
     </div>
   );
+=======
+import Select from "../Select/Select"
+import styles from "./dataTable.module.scss"
+
+export default function DataTable() {
+  return (
+    <div className={styles.datatable}>
+        <div className={styles.datatable_head}>
+            <Select
+                options={[
+                    { label: 'tout', value: 'Tout' }, 
+                    { label: 'Option 1', value: 'option1' }, 
+                    { label: 'Option 2', value: 'option2' }, 
+                    { label: 'Option 3', value: 'option3' }
+                ]}
+                onSelect={(option: any) => {}}
+            />
+            <Select
+                options={[
+                    { label: 'tout', value: 'Tout' }, 
+                    { label: 'Option 1', value: 'option1' }, 
+                    { label: 'Option 2', value: 'option2' }, 
+                    { label: 'Option 3', value: 'option3' }
+                ]}
+                onSelect={(option: any) => {}}
+            />
+        </div>
+
+    </div>
+  )
+>>>>>>> c7d594d5826fa663895942e0380377886befd96a
 }

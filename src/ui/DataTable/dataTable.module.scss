@@ -1,14 +1,24 @@
 .datatable{
     //overflow-x: scroll;
     //overflow-y: hidden;
+<<<<<<< HEAD
     //width: 1200px;
+=======
+    width: 1200px;
+>>>>>>> c7d594d5826fa663895942e0380377886befd96a
 }
 .datatable_head{
     display: flex;
     justify-content: flex-start;
     gap:5px;
     align-items: center;
+<<<<<<< HEAD
     padding: 10px;
     border-radius: 6px;
     box-shadow: 0px 0px 4px 2px rgb(0 0 0 / 9%);
+=======
+    padding: 6px 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+>>>>>>> c7d594d5826fa663895942e0380377886befd96a
 }
