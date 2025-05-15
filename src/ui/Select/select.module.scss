@@ -1,0 +1,89 @@
+@use "../../assets/styles/scss/variables";
+ 
+.select{
+  width:200px;
+  position: relative;
+}
+.select_value{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  border:1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor:pointer;
+}
+.select_value_text{
+  font-size: .8rem;
+  color: .8rem;
+}
+.select_box{
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position:absolute;
+  top:30px;
+  left:0;
+  width:calc(100% - 2px);
+  border:1px solid #ccc;
+  border-radius: 6px;
+  overflow: hidden;
+  z-index: 9999;
+}
+.select_list{
+  list-style: none;
+  padding:0;
+  margin: 0;
+  & li + li{
+    border-top: 1px solid #ccc;
+  }
+}
+.select_item{
+  padding: 6px 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &:hover{
+    background-color: #ccc;
+  }
+}
+.select_item_left{
+  font-size: .8rem;
+}
+.select_item_right{
+  display: flex;
+  align-items: center;
+  gap:2px;
+}
+.select_item_statut{
+  display: inline-block;
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  background-color:black;
+}
+.select_item_count{
+  font-size: .8rem;
+  font-style: italic;
+  color:silver
+}
+.select_no_result{
+  justify-content: center;
+}
+
+.select_search_box{
+  display: flex;
+  padding:5px;
+  margin-bottom: 5px;
+}
+.select_search_input{
+  padding: 5px;
+  border:1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width:100%;
+  font-size: .8rem;
+  &:focus{
+    outline: none;
+  }
+}
