@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react"
+import Pagination from "../Pagination/Pagination"
 import Select from "../Select/Select"
 import styles from "./dataTable.module.scss"
 
@@ -38,6 +40,18 @@ export default function DataTable(props: DataTableProps) {
     setSelectedFilters,
     filterConfig,
   } = props
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 8;
+
+  //display currente page
+  //==================================================
+  // si la donnée viendra de l'api, je dois metter à jour tout ceci
+  const startIdx = (currentPage - 1) * rowsPerPage;
+  const endIdx = startIdx + rowsPerPage;
+  const paginatedData = data.slice(startIdx, endIdx);
+  //=====================================================
 
   // Génération dynamique des Selects selon filterKeys
   const filtersData = filterConfig.map((conf) => {
@@ -112,8 +126,8 @@ export default function DataTable(props: DataTableProps) {
           </thead>
         )}
         <tbody>
-          {data && data.length > 0 ? (
-            data.map((item: any, idx: number) =>
+          {paginatedData && paginatedData.length > 0 ? (
+            paginatedData.map((item: any, idx: number) =>
               renderRow ? renderRow(item, idx) : (
                 <tr key={idx}>
                   {Object.keys(item).map((key: any, idx: number) => (
@@ -129,6 +143,13 @@ export default function DataTable(props: DataTableProps) {
           )}
         </tbody>
       </table>
+      <div className={styles.datatable_pagination}>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={Math.ceil(data.length / rowsPerPage)}
+          onPageChange={setCurrentPage}
+        />
+      </div>
     </div>
   )
 }
