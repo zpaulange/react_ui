@@ -81,7 +81,8 @@ export default function DataTable(props: DataTableProps) {
     }
 
     const options = [
-      { label: 'Tout', value: 'Tout' },
+      // possible de modifier la valeur de count
+      { label: 'Tout', value: 'tout', ...(data.length && {count: data.length}) },
       ...uniqueValues.map((val) => {
         const option: any = {
           label: getOptionLabel(key, val, props.statusLabels),
@@ -95,6 +96,7 @@ export default function DataTable(props: DataTableProps) {
         if (key === "status" && conf.count && props.statusLabels && props.statusLabels[val]) {
           option.count = props.statusLabels[val].count;
         }
+
         return option;
       }),
     ];
