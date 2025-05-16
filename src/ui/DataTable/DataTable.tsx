@@ -20,6 +20,15 @@ interface DataTableProps {
   setSelectedFilters: React.Dispatch<React.SetStateAction<{ [key: string]: any }>>
   filterConfig: FilterConfigItem[]
   statusLabels?: { [key: string]: { label: string; count: number; color: string } };
+  extraSelects?: Array<{
+    label: { title: string, name: string },
+    options: Array<{ label: string, value: any }>,
+    onSelect: (option: any) => void,
+    isLabel?: boolean,
+    isValue?: boolean,
+    statusColors?: boolean,
+    count?: boolean
+  }>
 }
 
 function getOptionLabel(key: string, value: any, statusLabels?: { [key: string]: { label: string, count: number } }) {
@@ -39,6 +48,7 @@ export default function DataTable(props: DataTableProps) {
     selectedFilters,
     setSelectedFilters,
     filterConfig,
+    extraSelects
   } = props
 
   // Pagination state
@@ -47,7 +57,7 @@ export default function DataTable(props: DataTableProps) {
 
   //display currente page
   //==================================================
-  // si la donnée viendra de l'api, je dois metter à jour tout ceci
+  // si la donnée viendra de l'api, je dois mettre à jour tout ceci
   const startIdx = (currentPage - 1) * rowsPerPage;
   const endIdx = startIdx + rowsPerPage;
   const paginatedData = data.slice(startIdx, endIdx);
@@ -72,7 +82,7 @@ export default function DataTable(props: DataTableProps) {
           label: getOptionLabel(key, val, props.statusLabels),
           value: val,
         };
-        // Ajoute la couleur depuis statusLabels si demandé
+        //Ajoute la couleur depuis statusLabels si demandé
         if (key === "status" && conf.statusColors && props.statusLabels && props.statusLabels[val]) {
           option.statusColor = props.statusLabels[val].color;
         }
@@ -114,6 +124,18 @@ export default function DataTable(props: DataTableProps) {
     <div className={styles.datatable}>
       <div className={styles.datatable_head}>
         {filterSelects}
+        {extraSelects && extraSelects.map((select, idx) => (
+          <Select
+            key={idx}
+            options={select.options}
+            onSelect={select.onSelect}
+            label={select.label}
+            isLabel={select.isLabel}
+            isValue={select.isValue}
+            statusColors={select.statusColors}
+            count={select.count}
+          />
+        ))}
       </div>
       <table>
         {thead && thead.length > 0 && (
