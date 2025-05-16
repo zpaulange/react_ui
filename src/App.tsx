@@ -300,6 +300,7 @@ function App() {
     }
   ]
 
+
   // head table
   const thead = ["ID", "Name", "Status", "Age", "Country"]
 
@@ -308,6 +309,22 @@ function App() {
     { key: "status", isLabel: true, statusColors: true, count: true },
     { key: "country", isLabel: true },
   ]
+
+  //possibilité d'ajout d'autres select manuellement
+  const extraSelects = [{
+    label: { title: "Année", name: "year" },
+    options: [
+      { value:"2020", label: "2020" },
+      { value:"2021", label: "2021" },
+      { value:"2022", label: "2022" },
+      { value:"2023", label: "2023" },
+      { value:"2024", label: "2024" },
+      { value:"2025", label: "2025" },
+    ],
+    onSelect: (option: any) => setSelectedFilters(prev => ({ ...prev, year: option })),
+    isLabel: true
+  }
+];
 
   //render row
   const renderRow = (item:any) => {
@@ -329,10 +346,12 @@ function App() {
           data={data}
           thead={thead}
           renderRow={renderRow}
+          rowsPerPage={8}
           selectedFilters={selectedFilters}
           setSelectedFilters={setSelectedFilters}
           filterConfig={filterConfig}
           statusLabels={statusLabels}
+          extraSelects={extraSelects}
         />
       </div>
       <pre>{JSON.stringify(selectedFilters, null, 2)}</pre>

@@ -42,13 +42,10 @@ npm run preview
 ## Structure du projet
 
 - `src/ui/Select/Select.tsx` : Composant Select personnalisable.
-- `src/ui/Select/select.module.scss` : Styles du Select.
-- `src/ui/DataTable/DataTable.tsx` : Composant DataTable avec filtres et pagination.
-- `src/ui/DataTable/dataTable.module.scss` : Styles du DataTable.
+- `src/ui/DataTable/DataTable.tsx` : Composant DataTable avec filtres dynamiques et pagination.
 - `src/ui/Pagination/Pagination.tsx` : Composant Pagination réutilisable.
-- `src/ui/Pagination/pagination.module.scss` : Styles de la pagination.
 - `src/App.tsx` : Exemple d'utilisation des composants.
-- `src/assets/styles/scss/_variables.scss` : Variables SCSS globales.
+- `src/assets/styles/scss/` : Styles SCSS globaux et modules.
 
 ---
 
@@ -86,6 +83,9 @@ const options = [
 | isValue      | `boolean`                              | Affiche la value à côté du label                 |
 | statusColors | `boolean`                              | Affiche un indicateur de couleur                 |
 | count        | `boolean`                              | Affiche un compteur à côté de chaque option      |
+| className    | `string`                               | Classe CSS personnalisée                         |
+| disabled     | `boolean`                              | Désactive le select                              |
+| value        | `any`                                  | Valeur sélectionnée (contrôlé)                   |
 
 ---
 
@@ -113,28 +113,49 @@ const statusLabels = {
   3: { label: "Blocked", count: 10, color: "#e53935" },
 }
 
+const extraSelects = [
+  {
+    label: { title: "Année", name: "year" },
+    options: [
+      { value: "2020", label: "2020" },
+      { value: "2021", label: "2021" },
+      // ...
+    ],
+    onSelect: (option) => setSelectedFilters(prev => ({ ...prev, year: option })),
+    isLabel: true
+  }
+];
+
 <DataTable
   data={data}
   thead={thead}
-  renderRow={undefined} // ou ta fonction personnalisée
-  filterConfig={filterConfig}
+  renderRow={renderRow}
   selectedFilters={selectedFilters}
   setSelectedFilters={setSelectedFilters}
+  filterConfig={filterConfig}
   statusLabels={statusLabels}
+  extraSelects={extraSelects}
+  rowsPerPage={8}
+  className="ma-table"
+  loading={false}
 />
 ```
 
 #### Props du composant DataTable
 
-| Prop              | Type                                                        | Description                                         |
-|-------------------|-------------------------------------------------------------|-----------------------------------------------------|
-| data              | `any[]`                                                     | Les données à afficher                              |
-| thead             | `string[]`                                                  | Les titres des colonnes                             |
-| renderRow         | `(item: any, idx: number) => React.ReactNode`               | Fonction personnalisée pour le rendu d'une ligne    |
-| selectedFilters   | `{ [key: string]: any }`                                    | Filtres sélectionnés                                |
-| setSelectedFilters| `React.Dispatch<React.SetStateAction<{ [key: string]: any }>>` | Setter pour les filtres sélectionnés             |
-| filterConfig      | `{ key: string, isLabel?: boolean, isValue?: boolean, statusColors?: boolean, count?: boolean }[]` | Configuration des filtres dynamiques |
-| statusLabels      | `{ [key: string]: { label: string, count: number, color: string } }` | Labels, couleurs et compteurs pour les statuts |
+| Prop                | Type                                                        | Description                                         |
+|---------------------|-------------------------------------------------------------|-----------------------------------------------------|
+| data                | `any[]`                                                     | Les données à afficher                              |
+| thead               | `string[]`                                                  | Les titres des colonnes                             |
+| renderRow           | `(item: any, idx: number) => React.ReactNode`               | Fonction personnalisée pour le rendu d'une ligne    |
+| selectedFilters     | `{ [key: string]: any }`                                    | Filtres sélectionnés                                |
+| setSelectedFilters  | `React.Dispatch<React.SetStateAction<{ [key: string]: any }>>` | Setter pour les filtres sélectionnés             |
+| filterConfig        | `{ key: string, isLabel?: boolean, isValue?: boolean, statusColors?: boolean, count?: boolean }[]` | Configuration des filtres dynamiques |
+| statusLabels        | `{ [key: string]: { label: string, count: number, color: string } }` | Labels, couleurs et compteurs pour les statuts |
+| extraSelects        | `Array<{ label: { title: string, name: string }, options: Array<{ label: string, value: any }>, onSelect: (option: any) => void, isLabel?: boolean, isValue?: boolean, statusColors?: boolean, count?: boolean }>` | Liste de Selects personnalisés à afficher en plus des filtres dynamiques |
+| rowsPerPage         | `number`                                                    | Nombre de lignes par page (défaut : 8)              |
+| className           | `string`                                                    | Classe CSS personnalisée                            |
+| loading             | `boolean`                                                   | Affiche un loader si true                           |
 
 ---
 
@@ -149,6 +170,7 @@ import Pagination from './ui/Pagination/Pagination'
   currentPage={1}
   totalPages={10}
   onPageChange={page => setCurrentPage(page)}
+  className="ma-pagination"
 />
 ```
 
@@ -159,6 +181,7 @@ import Pagination from './ui/Pagination/Pagination'
 | currentPage  | `number`               | Page courante                      |
 | totalPages   | `number`               | Nombre total de pages              |
 | onPageChange | `(page: number) => void` | Callback lors du changement de page |
+| className    | `string`               | Classe CSS personnalisée           |
 
 ---
 
@@ -173,7 +196,7 @@ import Pagination from './ui/Pagination/Pagination'
 
 ## Technologies
 
-- React 19
+- React
 - TypeScript
 - Vite
 - SCSS
