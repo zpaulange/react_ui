@@ -4,9 +4,19 @@ import './App.css'
 import DataTable from './ui/DataTable/DataTable'
 
 function App() {
+  //selected data
   const [selectedFilters, setSelectedFilters] = useState<{ [key: string]: any }>({});
   console.log('selectedFilters', selectedFilters);
 
+  //status labels
+  const statusLabels = {
+    0: { label: "Locked", count: 2, color: "#bdbdbd" },
+    1: { label: "Pending", count: 6, color: "#fbc02d" },
+    2: { label: "Active", count: 7, color: "#43a047" },
+    3: { label: "Blocked", count: 10, color: "#e53935" },
+  }
+
+  //data
   const data = [
     {
       id: 1,
@@ -41,12 +51,20 @@ function App() {
       name: 'Charlie Brown',
       status: 2,
       age: 45,
-      country: 'United Kingdom',
+      country: 'Canada',
     },
   ]
 
+  // head table
   const thead = ["ID", "Name", "Status", "Age", "Country"]
 
+  //filter configurations
+  const filterConfig = [
+    { key: "status", isLabel: true, statusColors: true, count: true },
+    { key: "country", isLabel: true },
+  ]
+
+  //render row
   const renderRow = (item:any) => {
     return (
       <tr key={item.id}>
@@ -58,46 +76,18 @@ function App() {
       </tr>
     );
   }
-  // Les clés pour lesquelles tu veux générer un filtre
-  const filterKeys = ['status', 'country'];
   
   return (
     <>
       <div className='box'>
         <DataTable
-          filters={{
-            data:[
-              {
-                label:{
-                  title:"Status",
-                  name:"status"
-                },
-                options:[
-                  { label: 'tout', value: 'Tout', count: 5 },
-                  { label: 'Option 1', value: 'option1', statusColor: 'red', count: 5 },
-                  { label: 'Option 2', value: 'option2', statusColor: 'green', count: 10},
-                  { label: 'Option 3', value: 'option3', statusColor: 'yellow', count: 18 },
-                ]
-              },
-              {
-                label:{
-                  title:"Nom",
-                  name:"nom"
-                },
-                options:[
-                  { label: 'tout', value: 'Tout', count: 5 },
-                  { label: 'Option 1', value: 'option1', statusColor: 'red', count: 5 },
-                  { label: 'Option 2', value: 'option2', statusColor: 'green', count: 10},
-                  { label: 'Option 3', value: 'option3', statusColor: 'yellow', count: 18 },
-                ]
-              }
-            ]
-          }}
           data={data}
           thead={thead}
           renderRow={renderRow}
           selectedFilters={selectedFilters}
           setSelectedFilters={setSelectedFilters}
+          filterConfig={filterConfig}
+          statusLabels={statusLabels}
         />
       </div>
       <pre>{JSON.stringify(selectedFilters, null, 2)}</pre>

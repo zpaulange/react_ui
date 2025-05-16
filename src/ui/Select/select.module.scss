@@ -54,7 +54,14 @@
   }
 }
 .select_item_left{
+  display: flex;
+  align-items: center;
+  gap:2px;
+}
+.select_item_label,.select_item_value{
   font-size: .8rem;
+  display: block;
+  text-align: left;
 }
 .select_item_right{
   display: flex;
