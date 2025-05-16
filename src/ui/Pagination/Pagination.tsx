@@ -4,6 +4,7 @@ interface PaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
+  className?: string
 }
 
 function getPages(current: number, total: number) {
@@ -25,11 +26,11 @@ function getPages(current: number, total: number) {
 }
 
 export default function Pagination(props: PaginationProps) {
-  const { currentPage, totalPages, onPageChange } = props;
+  const { currentPage, totalPages, onPageChange, className } = props;
   const pages = getPages(currentPage, totalPages);
 
   return (
-    <div className={styles.pagination}>
+    <div className={styles.pagination + ' ' + (className&&className)}>
       <div className={styles.pagination_left}>
         <ul className={styles.pagination_left_list}>
           <li className={styles.pagination_left_item}>

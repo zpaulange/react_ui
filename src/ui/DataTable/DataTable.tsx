@@ -29,6 +29,9 @@ interface DataTableProps {
     statusColors?: boolean,
     count?: boolean
   }>
+  className?: string
+  rowsPerPage?: number
+  loading?: boolean
 }
 
 function getOptionLabel(key: string, value: any, statusLabels?: { [key: string]: { label: string, count: number } }) {
@@ -48,18 +51,20 @@ export default function DataTable(props: DataTableProps) {
     selectedFilters,
     setSelectedFilters,
     filterConfig,
-    extraSelects
+    extraSelects,
+    className,
+    rowsPerPage,
+    loading=false
   } = props
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 8;
 
   //display currente page
   //==================================================
   // si la donnée viendra de l'api, je dois mettre à jour tout ceci
-  const startIdx = (currentPage - 1) * rowsPerPage;
-  const endIdx = startIdx + rowsPerPage;
+  const startIdx = (currentPage - 1) * (rowsPerPage??10);
+  const endIdx = startIdx + (rowsPerPage??10);
   const paginatedData = data.slice(startIdx, endIdx);
   //=====================================================
 
@@ -137,7 +142,7 @@ export default function DataTable(props: DataTableProps) {
           />
         ))}
       </div>
-      <table>
+      <table className={className}>
         {thead && thead.length > 0 && (
           <thead>
             <tr>
@@ -148,7 +153,13 @@ export default function DataTable(props: DataTableProps) {
           </thead>
         )}
         <tbody>
-          {paginatedData && paginatedData.length > 0 ? (
+          {loading ? (
+            <tr>
+              <td colSpan={thead?.length || 1} style={{ textAlign: "center" }}>
+                Chargement...
+              </td>
+            </tr>
+          ) : paginatedData && paginatedData.length > 0 ? (
             paginatedData.map((item: any, idx: number) =>
               renderRow ? renderRow(item, idx) : (
                 <tr key={idx}>
@@ -165,13 +176,13 @@ export default function DataTable(props: DataTableProps) {
           )}
         </tbody>
       </table>
-      <div className={styles.datatable_pagination}>
+      {data && data.length > 0 && (
         <Pagination
           currentPage={currentPage}
-          totalPages={Math.ceil(data.length / rowsPerPage)}
+          totalPages={Math.ceil(data.length / (rowsPerPage??10))}
           onPageChange={setCurrentPage}
         />
-      </div>
+      )}
     </div>
   )
 }

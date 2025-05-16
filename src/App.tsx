@@ -300,6 +300,7 @@ function App() {
     }
   ]
 
+
   // head table
   const thead = ["ID", "Name", "Status", "Age", "Country"]
 
@@ -345,6 +346,7 @@ function App() {
           data={data}
           thead={thead}
           renderRow={renderRow}
+          rowsPerPage={8}
           selectedFilters={selectedFilters}
           setSelectedFilters={setSelectedFilters}
           filterConfig={filterConfig}
