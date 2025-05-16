@@ -19,9 +19,10 @@ interface SelectProps {
   label?: any
   statusColors?: boolean
   count?: boolean
+  disabled?: boolean
 }
 export default function Select(props: SelectProps) {
-  const {width, options, onSelect, isLabel, label, isValue=false, statusColors, count} = props
+  const {width, options, onSelect, isLabel, label, isValue=false, statusColors, count, disabled=false} = props
   //states
   const [showSelectOptions, setShowSelectOptions] = useState(false)
   const selectRef = useRef<HTMLDivElement>(null)
@@ -97,7 +98,7 @@ export default function Select(props: SelectProps) {
           }
         </span>
       </div>
-      {showSelectOptions && (
+      {showSelectOptions && !disabled &&(
         <div className={styles.select_box} style={{ ...(label && { top: '44px' }) }}>
           <div className={styles.select_search_box}>
             <input
