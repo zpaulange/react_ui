@@ -4,6 +4,11 @@
   width:200px;
   position: relative;
 }
+.select_label_title{
+  font-size: .8rem;
+  display: block;
+  text-align: left;
+}
 .select_value{
   display: flex;
   justify-content: space-between;
@@ -28,6 +33,7 @@
   border-radius: 6px;
   overflow: hidden;
   z-index: 9999;
+  background-color: #fff;
 }
 .select_list{
   list-style: none;
@@ -48,7 +54,14 @@
   }
 }
 .select_item_left{
+  display: flex;
+  align-items: center;
+  gap:2px;
+}
+.select_item_label,.select_item_value{
   font-size: .8rem;
+  display: block;
+  text-align: left;
 }
 .select_item_right{
   display: flex;

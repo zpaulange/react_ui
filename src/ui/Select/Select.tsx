@@ -15,11 +15,13 @@ interface SelectProps {
   options: Option[]
   onSelect: (option: Option) => void
   isLabel?: boolean,
+  isValue?: boolean
+  label?: any
   statusColors?: boolean
   count?: boolean
 }
 export default function Select(props: SelectProps) {
-  const {width, options, onSelect, isLabel, statusColors, count} = props
+  const {width, options, onSelect, isLabel, label, isValue=false, statusColors, count} = props
   //states
   const [showSelectOptions, setShowSelectOptions] = useState(false)
   const selectRef = useRef<HTMLDivElement>(null)
@@ -66,7 +68,7 @@ export default function Select(props: SelectProps) {
     setShowSelectOptions(false)
   }
 
-  // Filtrer les options selon la recherche
+  //filter according to search
   const filteredOptions = options.filter(option =>
     option.label.toLowerCase().includes(search.toLowerCase()) ||
     option.value.toString().toLowerCase().includes(search.toLowerCase())
@@ -74,14 +76,20 @@ export default function Select(props: SelectProps) {
 
   return (
     <div className={styles.select} ref={selectRef} style={{...(width && { width }) }}>
+      {label && label.title && <span className={styles.select_label_title}>{label.title}</span>}
       <div className={styles.select_value} onClick={handleDisplaySelectOptions}>
-        <span className={styles.select_value_text}>
-          {selectedOption ? selectedOption.value : 'Select an option'}
-        </span>
-        <span className={styles.select_item_right}>
+        <span className={styles.select_item_left}>
           {statusColors && selectedOption?.statusColor &&
             <span className={styles.select_item_statut} style={{ backgroundColor: selectedOption?.statusColor }}></span>
           }
+          <span className={styles.select_value_text}>
+            {selectedOption ? 
+              (isLabel && !isValue ? selectedOption.label : (isValue && !isLabel ? selectedOption.value : selectedOption.label) ) : 
+              'Select an option'
+            }
+          </span>
+        </span>
+        <span className={styles.select_item_right}>
           {count &&
             <span className={styles.select_item_count}>
               ({selectedOption?.count?selectedOption.count:0})
@@ -90,7 +98,7 @@ export default function Select(props: SelectProps) {
         </span>
       </div>
       {showSelectOptions && (
-        <div className={styles.select_box}>
+        <div className={styles.select_box} style={{ ...(label && { top: '44px' }) }}>
           <div className={styles.select_search_box}>
             <input
               type="text"
@@ -111,11 +119,20 @@ export default function Select(props: SelectProps) {
                   className={styles.select_item}
                   onClick={() => handleSelect(option)}
                 >
-                  <span className={styles.select_item_left}>{option.value} {isLabel && `(${option.label})`}</span>
-                  <span className={styles.select_item_right}>
+                  <span className={styles.select_item_left}>
                     {statusColors &&
                       <span className={styles.select_item_statut} style={{ backgroundColor: option.statusColor }}></span>
                     }
+                    {isValue && !isLabel && <span className={styles.select_item_value}>{option.value}</span>}
+                    {isLabel && !isValue && <span className={styles.select_item_label}>{option.label}</span>}
+                    {isValue && isLabel && (
+                      <span className={styles.select_item_label}>
+                        {option.value}{' '}
+                        {`(${option.label})`}
+                      </span>
+                    )}
+                  </span>
+                  <span className={styles.select_item_right}>
                     {count &&
                       <span className={styles.select_item_count}>({option.count})</span>
                     }

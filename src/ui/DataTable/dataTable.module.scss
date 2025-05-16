@@ -1,0 +1,14 @@
+.datatable{
+    //overflow-x: scroll;
+    //overflow-y: hidden;
+    //width: 1200px;
+}
+.datatable_head{
+    display: flex;
+    justify-content: flex-start;
+    gap:5px;
+    align-items: center;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0px 0px 4px 2px rgb(0 0 0 / 9%);
+}
