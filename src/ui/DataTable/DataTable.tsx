@@ -122,6 +122,7 @@ export default function DataTable(props: DataTableProps) {
       isValue={f.isValue}
       statusColors={f.statusColors}
       count={f.count}
+      //disabled={true}
     />
   ))
 
